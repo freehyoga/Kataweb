@@ -22,11 +22,12 @@ class FunctionalTest(TestCase):
         self.browser.get('http://127.0.0.1:8000')
         self.assertIn('BuscoAyuda', self.browser.title)
 
-    """
-    def test_registro(self):
+
+    def test_2_registro(self):
         self.browser.get('http://127.0.0.1:8000')
         link = self.browser.find_element_by_id('id_register')
         link.click()
+        self.browser.implicitly_wait(1)
 
         nombre = self.browser.find_element_by_id('id_nombre')
         nombre.send_keys('Juan Daniel')
@@ -45,8 +46,13 @@ class FunctionalTest(TestCase):
         correo.send_keys('jd.patino1@uniandes.edu.co')
 
         imagen = self.browser.find_element_by_id('id_imagen')
-        ruta= os.path.join(sys.path[0], "polls/files", 'image.jpg')
-        imagen.send_keys(ruta)
+        ruta= os.path.join(sys.path[0], "polls/files", 'desarrollo.jpg')
+
+        if os.name == 'nt':
+            ruta = ruta.replace("\\","/")
+            imagen.send_keys(ruta)
+        else:
+            imagen.send_keys(ruta)
 
         nombreUsuario = self.browser.find_element_by_id('id_username')
         nombreUsuario.send_keys('juan645')
@@ -61,13 +67,3 @@ class FunctionalTest(TestCase):
 
         self.assertIn('Juan Daniel Arevalo', span.text)
 
-
-    def test_verDetalle(self):
-        self.browser.get('http://127.0.0.1:8000')
-        span=self.browser.find_element(By.XPATH, '//span[text()="Juan Daniel Arevalo"]')
-        span.click()
-
-        h2=self.browser.find_element(By.XPATH, '//h2[text()="Juan Daniel Arevalo"]')
-
-        self.assertIn('Juan Daniel Arevalo', h2.text)
-    """
