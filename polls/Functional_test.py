@@ -68,11 +68,28 @@ class FunctionalTest(TestCase):
         self.assertIn('Andres Daniel Arevalo', span.text)
 
     def test_3_detail(self):
+        self.browser.get('http://127.0.0.1:8000')
+        span = self.browser.find_element(By.XPATH, '//span[text()="Juan Daniel Arevalo"]')
+        span.click()
 
-            self.browser.get('http://127.0.0.1:8000')
-            span = self.browser.find_element(By.XPATH, '//span[text()="Juan Daniel Arevalo"]')
-            span.click()
+        h2 = self.browser.find_element(By.XPATH, '//h2[text()="Juan Daniel Arevalo"]')
+        self.assertIn('Juan Daniel Arevalo', h2.text)
 
-            h2 = self.browser.find_element(By.XPATH, '//h2[text()="Juan Daniel Arevalo"]')
-            self.assertIn('Juan Daniel Arevalo', h2.text)
+    def test_4_login(self):
+        self.browser.get('http://127.0.0.1:8000')
+        link = self.browser.find_element_by_id('id_login')
+        link.click()
+        self.browser.implicitly_wait(1)
+
+        usuarioLogin = self.browser.find_element_by_id('userLogin')
+        usuarioLogin.send_keys('daniel645')
+
+        claveLogin = self.browser.find_element_by_id('passLogin')
+        claveLogin.send_keys('clave123')
+
+        btnLogin = self.browser.find_element_by_id('btnLogin')
+        btnLogin.click()
+
+        self.assertIn('Bienvenido Andres Daniel Arevalo', self.browser.title)
+
 
