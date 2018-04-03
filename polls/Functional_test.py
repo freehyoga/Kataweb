@@ -55,7 +55,7 @@ class FunctionalTest(TestCase):
             imagen.send_keys(ruta)
 
         nombreUsuario = self.browser.find_element_by_id('id_username')
-        nombreUsuario.send_keys('daniel645')
+        nombreUsuario.send_keys('janiel645')
 
         clave = self.browser.find_element_by_id('id_password')
         clave.send_keys('clave123')
@@ -81,15 +81,16 @@ class FunctionalTest(TestCase):
         link.click()
         self.browser.implicitly_wait(1)
 
-        usuarioLogin = self.browser.find_element_by_id('userLogin')
-        usuarioLogin.send_keys('daniel645')
+        username = self.browser.find_element_by_id('id_username')
+        username.send_keys('daniel645')
 
-        claveLogin = self.browser.find_element_by_id('passLogin')
-        claveLogin.send_keys('clave123')
+        password = self.browser.find_element_by_id('id_password')
+        password.send_keys('clave123')
 
         btnLogin = self.browser.find_element_by_id('btnLogin')
         btnLogin.click()
 
-        self.assertIn('Bienvenido Andres Daniel Arevalo', self.browser.title)
+        a= self.browser.find_element(By.XPATH, '//a[text()="daniel645"]')
+        self.assertIn('daniel645', a.text)
 
 
