@@ -74,8 +74,8 @@ def register(request):
 
     return HttpResponseRedirect('/')
 
-def editar_perfil(request,idTrabajador):
-    trabajador=Trabajador.objects.get(usuarioId=idTrabajador)
+def editar_perfil(request):
+    trabajador=Trabajador.objects.get(usuarioId=request.user.id)
     if request.method == 'POST':
         # formulario enviado
         form_trabajador = TrabajadorForm(request.POST, request.FILES, instance=trabajador)
@@ -83,14 +83,14 @@ def editar_perfil(request,idTrabajador):
         if form_trabajador.is_valid():
             # formulario validado correctamente
             form_trabajador.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/editar_perfil')
 
     else:
         # formulario inicial
         form_trabajador = TrabajadorForm(instance=trabajador)
 
-    context = {'form_trabajador': form_trabajador}
-    return render(request, 'polls/editar.html', context)
+    context = {'form_trabajador': form_trabajador, 'trabajador': trabajador}
+    return render(request, 'polls/edit.html', context)
 
 @csrf_exempt
 def add_comment(request):
