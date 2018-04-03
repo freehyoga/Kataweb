@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'buscoayuda4101.wsgi.application'
 DATABASES = {
      'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'BuscoAyuda',#os.environ.get('DB_NAME') ,
+        'NAME': 'buscoayuda',#os.environ.get('DB_NAME') ,
         'USER': 'postgres', #os.environ.get('DB_USER'),
-        'PASSWORD': '', #os.environ.get('DB_PASSWORD'),
+        'PASSWORD': 'password', #os.environ.get('DB_PASSWORD'),
         'HOST': 'localhost', #os.environ.get('DB_HOST'),
         'PORT': '',
     }

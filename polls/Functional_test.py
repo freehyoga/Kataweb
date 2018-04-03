@@ -12,7 +12,7 @@ class FunctionalTest(TestCase):
 
     def setUp(self):
         # self.browser = webdriver.Chrome("C:\\Users\\CarriCas\\Documents\\Platzi\\Django\\comple\\chromedriver_win32\\chromedriver.exe")
-        self.browser = webdriver.Chrome(executable_path=r"files/chromedriver.exe")
+        self.browser = webdriver.Chrome(executable_path=r"./chromedriver")
         self.browser.implicitly_wait(2)
 
     def tearDown(self):
@@ -27,7 +27,7 @@ class FunctionalTest(TestCase):
         self.browser.get('http://127.0.0.1:8000')
         link = self.browser.find_element_by_id('id_register')
         link.click()
-        self.browser.implicitly_wait(1)
+        self.browser.implicitly_wait(2)
 
         nombre = self.browser.find_element_by_id('id_nombre')
         nombre.send_keys('Andres Daniel')
@@ -54,10 +54,10 @@ class FunctionalTest(TestCase):
         else:
             imagen.send_keys(ruta)
 
-        nombreUsuario = self.browser.find_element_by_id('id_username')
+        nombreUsuario = self.browser.find_element(By.XPATH, '//form[@id="register-form"]//input[@id="id_username"]')
         nombreUsuario.send_keys('janiel645')
 
-        clave = self.browser.find_element_by_id('id_password')
+        clave = self.browser.find_element(By.XPATH, '//form[@id="register-form"]//input[@id="id_password"]')
         clave.send_keys('clave123')
 
         botonGrabar = self.browser.find_element_by_id('id_grabar')
@@ -69,11 +69,11 @@ class FunctionalTest(TestCase):
 
     def test_3_detail(self):
         self.browser.get('http://127.0.0.1:8000')
-        span = self.browser.find_element(By.XPATH, '//span[text()="Juan Daniel Arevalo"]')
+        span = self.browser.find_element(By.XPATH, '//span[text()="Andres Daniel Arevalo"]')
         span.click()
 
-        h2 = self.browser.find_element(By.XPATH, '//h2[text()="Juan Daniel Arevalo"]')
-        self.assertIn('Juan Daniel Arevalo', h2.text)
+        h2 = self.browser.find_element(By.XPATH, '//h2[text()="Andres Daniel Arevalo"]')
+        self.assertIn('Andres Daniel Arevalo', h2.text)
 
     def test_4_login(self):
         self.browser.get('http://127.0.0.1:8000')
@@ -82,7 +82,7 @@ class FunctionalTest(TestCase):
         self.browser.implicitly_wait(1)
 
         username = self.browser.find_element_by_id('id_username')
-        username.send_keys('daniel645')
+        username.send_keys('janiel645')
 
         password = self.browser.find_element_by_id('id_password')
         password.send_keys('clave123')
@@ -90,7 +90,17 @@ class FunctionalTest(TestCase):
         btnLogin = self.browser.find_element_by_id('btnLogin')
         btnLogin.click()
 
-        a= self.browser.find_element(By.XPATH, '//a[text()="daniel645"]')
-        self.assertIn('daniel645', a.text)
+        a= self.browser.find_element(By.XPATH, '//a[text()="janiel645"]')
+        self.assertIn('janiel645', a.text)
 
+    def test_5_edit(self): 
+        self.browser.get('http://127.0.0.1:8000/editar_perfil')
+        nombre = self.browser.find_element_by_id('id_nombre')
+        nombre.send_keys('Juan Daniel')
 
+        botonGrabar = self.browser.find_element_by_id('id_grabar')
+        botonGrabar.click()
+        self.browser.implicitly_wait(3)
+        
+        span=self.browser.find_element(By.XPATH, '//span[text()="Juan Daniel Arevalo"]')
+        self.assertIn('Juan Daniel Arevalo', span.text)
